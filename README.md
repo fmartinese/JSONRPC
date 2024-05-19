@@ -1,7 +1,8 @@
 # JSON-RPC 2.0 Java library
 Project for Software Engineering at Polimi. Java library for use of JSON-RPC 2.0 communication protocol.
 
-This module is part of a bigger project that uses this library for remote communication between clients and a server in order to request and give authorizations to specific users for specific resources. Further details can be found within the [AuthOK project documentation](https://github.com/taygumus/auth-ok).
+This module is part of a bigger project that uses this library for remote communication between clients and a server in order to request and give authorizations to specific users for specific resources.  
+Further details can be found within the [AuthOK project documentation](https://github.com/taygumus/auth-ok).
 
 This library implements JSON-RPC 2.0 communication protocol (spec: https://www.jsonrpc.org/specification) over sockets, using ZeroMQ.
 
