@@ -14,8 +14,8 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class StructuredMemberTest {
-    //i costruttori da jsonarray e jsonobject non sono testati perché assegnano semplicemente il valore
-    //stessa cosa per i getarray e getobj che sono dei semplici getter
+    // constructors from JSONArray and JSONObject are not tested because they simply assign the value
+    // same for getArray and getObj, which are simple getters
 
     @Test
     public void getMap() {
@@ -26,10 +26,10 @@ public class StructuredMemberTest {
         StructuredMember subobj = new StructuredMember(map);
         map.put("subobj", new Member(subobj));
 
-        //la costruzione da map crea internamente un jsonobject
+        // construction from map internally creates a JSONObject
         StructuredMember tested = new StructuredMember(map);
         assertFalse(tested.isArray());
-        //dal jsonobject viene ricava la mappa
+        // the map is extracted from the JSONObject
         assertEquals(map, tested.getMap());
     }
 
@@ -42,10 +42,10 @@ public class StructuredMemberTest {
         StructuredMember subarray = new StructuredMember(list);
         list.add(new Member(subarray));
 
-        //la costruzione da lista crea internamente un jsonarray
+        // construction from list internally creates a JSONArray
         StructuredMember tested = new StructuredMember(list);
         assertTrue(tested.isArray());
-        //dal jsonarray viene ricavata la lista
+        // the list is extracted from the JSONArray
         assertEquals(list, tested.getList());
     }
 
@@ -79,5 +79,4 @@ public class StructuredMemberTest {
         Collections.reverse(list);
         assertNotEquals(sm2, new StructuredMember(list));
     }
-
 }

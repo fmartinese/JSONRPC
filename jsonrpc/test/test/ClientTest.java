@@ -34,7 +34,7 @@ public class ClientTest {
         }
 
         public void run() {
-            //while(true) {
+            // while(true) {
             ArrayList<Request> reqs = s.receive();
             ArrayList<Response> resps = new ArrayList<>();
             for (Request r : reqs) {
@@ -47,10 +47,9 @@ public class ClientTest {
             } catch (JSONRPCException e) {
                 fail(e.getMessage());
             }
-            //}
+            // }
         }
     }
-
 
     @Test
     public void sendRequest() throws JSONRPCException {
@@ -71,7 +70,7 @@ public class ClientTest {
     public void sendNotify() throws JSONRPCException {
         Request notify = new Request("method", null);
         client.sendNotify(notify);
-        //no exception thrown
+        // no exception thrown
     }
 
     @Test(expected = JSONRPCException.class)
@@ -133,5 +132,4 @@ public class ClientTest {
         assertEquals(id1, resps.get(0).getId());
         assertEquals(id2, resps.get(1).getId());
     }
-    
 }

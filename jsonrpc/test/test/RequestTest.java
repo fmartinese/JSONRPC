@@ -31,7 +31,6 @@ public class RequestTest {
         paramsMap = new StructuredMember(par);
     }
 
-
     @Test (expected = InvalidParameterException.class)
     public void testNullMethodConstructor() {
         new Request(null, paramsList);
@@ -107,25 +106,25 @@ public class RequestTest {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    @Test //(expected = InvalidParameterException.class)
+    @Test // (expected = InvalidParameterException.class)
     public void testNoVersion() {
         expectedEx.expect(InvalidParameterException.class);
         expectedEx.expectMessage("Not jsonrpc 2.0");
-        //no jsonrpc 2.0
+        // no jsonrpc 2.0
         new Request("{\"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}");
         fail("Expected invalid parameter exception");
     }
 
-    @Test //(expected = InvalidParameterException.class)
+    @Test // (expected = InvalidParameterException.class)
     public void testWrongVergion() {
         expectedEx.expect(InvalidParameterException.class);
         expectedEx.expectMessage("Not jsonrpc 2.0");
-        //jsonrpc != 2.0
+        // jsonrpc != 2.0
         new Request("{\"jsonrpc\": \"3.0\", \"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}");
         fail("Expected invalid parameter exception");
     }
 
-    @Test //(expected = InvalidParameterException.class)
+    @Test // (expected = InvalidParameterException.class)
     public void testNotStructuredParams() {
         expectedEx.expect(InvalidParameterException.class);
         expectedEx.expectMessage("Not a structured member");

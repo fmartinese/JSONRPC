@@ -4,13 +4,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 abstract class JsonRpcMessage extends JsonRpcObj {
-    Id id; //può essere String o Integer (o null in alcuni casi (non notifica))
+    Id id; // it can be a String or an Integer (or null in some cases (non-notification))
     static final String VER = "2.0";
 
     public Id getId() {
-        //id nullo è diverso da notifica
+        // a null ID is different from a notification
         if (id == null) {
-            throw new NullPointerException("Notify: id undefined"); //è notifica
+            throw new NullPointerException("Notify: id undefined"); // it's a notification
         }
         return id;
     }
@@ -24,6 +24,6 @@ abstract class JsonRpcMessage extends JsonRpcObj {
             }
         } catch (JSONException e) {
                 System.out.println(e.getMessage());
-            }
+        }
     }
 }

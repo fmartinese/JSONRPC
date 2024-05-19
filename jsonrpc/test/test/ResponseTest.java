@@ -80,28 +80,26 @@ public class ResponseTest {
         fail("Expected invalid parameter exception");
     }
 
-
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    @Test //(expected = InvalidParameterException.class)
+    @Test // (expected = InvalidParameterException.class)
     public void testNoVersion() {
         expectedEx.expect(InvalidParameterException.class);
         expectedEx.expectMessage("Not jsonrpc 2.0");
-        //no jsonrpc 2.0
+        // no jsonrpc 2.0
         new Response("{\"result\": 19, \"id\": 1}");
         fail("Expected invalid parameter exception");
     }
 
-    @Test //(expected = InvalidParameterException.class)
+    @Test // (expected = InvalidParameterException.class)
     public void testWrongVersion() {
         expectedEx.expect(InvalidParameterException.class);
         expectedEx.expectMessage("Not jsonrpc 2.0");
-        //no jsonrpc 2.0
+        // no jsonrpc 2.0
         new Response("{\"jsonrpc\": \"2\", \"result\": 19, \"id\": 1}");
         fail("Expected invalid parameter exception");
     }
-
 
     @Test
     public void testExtraMembers() {
@@ -131,6 +129,5 @@ public class ResponseTest {
         assertTrue(r.hasError());
         e = new Error(Error.Errors.PARSE);
         assertEquals(e, r.getError());
-
     }
 }

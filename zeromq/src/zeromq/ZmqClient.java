@@ -12,7 +12,7 @@ public class ZmqClient implements IZmqClient {
         this.port = port;
     }
 
-    //usare pattern pool per le connessioni?
+    // use a connection pooling pattern for connections?
     @Override
     public String request(String req) {
         socket = ctx.socket(ZMQ.REQ);

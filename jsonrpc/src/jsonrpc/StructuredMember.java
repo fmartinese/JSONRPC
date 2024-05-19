@@ -11,7 +11,6 @@ import java.util.Iterator;
 public class StructuredMember {
     private JSONArray list;
     private JSONObject map;
-
     private boolean isArray;
 
     StructuredMember(JSONObject obj) {
@@ -20,6 +19,7 @@ public class StructuredMember {
         list = null;
         isArray = false;
     }
+
     StructuredMember(JSONArray array) {
         if (array.length() == 0) {throw new InvalidParameterException("Json array is empty");}
         list = array;
@@ -40,7 +40,6 @@ public class StructuredMember {
         map = null;
         isArray = true;
     }
-
 
     public boolean isArray() {
         return isArray;

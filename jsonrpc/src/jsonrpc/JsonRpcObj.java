@@ -5,23 +5,23 @@ import org.json.JSONObject;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
-public abstract class JsonRpcObj { //public per test
+public abstract class JsonRpcObj { // public for test
     JSONObject obj;
-    //private boolean valid;
+    // private boolean valid;
     String jsonRpcString;
 
-    public String getJsonString() {
+    public String getJsonString() { // public for test
         return jsonRpcString;
-    } //public solo per tesy
+    }
 
     /*public boolean isValid() {
         return valid;
     }*/
 
-    abstract JSONObject toJsonObj() throws JSONRPCException; //crea oggetto json rpc utilizzando attributi. implementata in maniera differente in richiesta, risposta e errore
+    abstract JSONObject toJsonObj() throws JSONRPCException; // build a JSON-RPC object using attributes. Implemented differently in request, response and error
 
     static boolean checkMembersSubset(Enum<?> members[], JSONObject obj) {
-        //verifica l'oggetto abbia solo i parametri contenuti nell'array dei membri
+        // verify that the object has only the parameters contained in the member array
         ArrayList<String> memNames = new ArrayList<>();
         for (Enum<?> mem : members) {
             memNames.add(mem.toString());
@@ -34,7 +34,7 @@ public abstract class JsonRpcObj { //public per test
         return true;
     }
 
-    public static void putMember(JSONObject obj, String key, Member value) { //public per test
+    public static void putMember(JSONObject obj, String key, Member value) { // public for test
         try {
             switch (value.getType()) {
                 case ARRAY:
@@ -68,7 +68,7 @@ public abstract class JsonRpcObj { //public per test
         }
     }
 
-    public JSONObject getObj() {
+    public JSONObject getObj() { // public for test
         return this.obj;
-    } //public solo per test
+    }
 }

@@ -27,7 +27,6 @@ public class ErrorTest {
         errData = new Member(new StructuredMember(data));
     }
 
-
     @Test
     public void hasErrorData() {
         Error e = new Error(Error.Errors.INTERNAL_ERROR);
