@@ -23,7 +23,7 @@ abstract class JsonRpcMessage extends JsonRpcObj {
                 case NULL: obj.put(key, JSONObject.NULL); break;
             }
         } catch (JSONException e) {
-                System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
