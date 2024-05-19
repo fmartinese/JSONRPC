@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="jsonrpc:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/jsonrpc_jar</output-path>
+    <root id="archive" name="jsonrpc.jar">
+      <element id="module-output" name="jsonrpc" />
+      <element id="module-output" name="zeromq" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jsonrpc/lib/java-json.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/zeromq/lib/jeromq-0.4.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
