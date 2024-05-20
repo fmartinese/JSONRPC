@@ -28,12 +28,12 @@ public class ServerTest {
 
     @Test
     public void receive() {
-        //receive single request (JSONObject)
+        // receive single request (JSONObject)
         client.send(req.getJsonString());
         ArrayList<Request> r = server.receive();
         assertEquals(1, r.size());
         assertEquals(req, r.get(0));
-        //receive batch of one request
+        // receive batch of one request
         ArrayList<Request> reqs = new ArrayList<>();
         reqs.add(not);
         Batch b = new Batch(reqs);
@@ -41,7 +41,7 @@ public class ServerTest {
         r = server.receive();
         assertEquals(1, r.size());
         assertEquals(not, r.get(0));
-        //receive multiple request (batch) (JSONArray)
+        // receive multiple request (batch) (JSONArray)
         reqs = new ArrayList<>();
         reqs.add(req);
         reqs.add(not);
@@ -87,18 +87,11 @@ public class ServerTest {
         fail("Expected Unsupported Operation exception");
     }
 
-    /*testare invio risposta singola a batch e viceversa (invalido!)
-            testare invio risposta singola a batch di dim 1 (valido!)
-    testare invio a batch di sole notifiche
-
-    testare invii normali*/
-
     @Test
     public void replySingleResponse() {
     }
 
     @Test
     public void replyMultiResponses() {
-
     }
 }

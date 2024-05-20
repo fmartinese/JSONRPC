@@ -23,7 +23,7 @@ public class ZmqTest {
 
     @Before
     public void setUp() {
-        //ogni test ha un server che ascolta su una porta diversa
+        // each test has a server listening on a different port
         s = new ZmqServer(port);
         c = new ZmqClient(port);
         port++;
@@ -48,7 +48,7 @@ public class ZmqTest {
     @Test
     public void testSendEmpty() {
         c.send("");
-        //no exception thrown
+        // no exception thrown
     }
 
     @Test
@@ -93,7 +93,7 @@ public class ZmqTest {
     public void testSendToNoServer() {
         c = new ZmqClient(5123);
         c.send(MSG);
-        //no exception thrown
+        // no exception thrown
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -107,6 +107,4 @@ public class ZmqTest {
             }
         }
     }
-
-
 }

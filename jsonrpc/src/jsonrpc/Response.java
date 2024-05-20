@@ -13,7 +13,7 @@ public class Response extends AbstractResponse {
         super(id, error);
     }
 
-    public Response(String jsonRpcString) { //public solo per test junit
+    public Response(String jsonRpcString) { // public only for junit test
         try {
             obj = new JSONObject(jsonRpcString);
 
@@ -31,7 +31,7 @@ public class Response extends AbstractResponse {
                 throw new InvalidParameterException("Method member not defined");
             }
 
-            //obbligatorio nelle risposte
+            // mandatory in responses
             if (obj.has(Members.ID.toString())) {
                 id = Id.toId(obj.get(Members.ID.toString()));
             } else {
@@ -41,14 +41,13 @@ public class Response extends AbstractResponse {
             throw new InvalidParameterException(e.getMessage());
         }
 
-        //verifica che non ci siano altri parametri
+        // check that there are no other parameters
         if (!checkMembersSubset(Members.values(), obj)) {
             throw new InvalidParameterException("Unexpected member");
         }
 
         this.jsonRpcString = obj.toString();
     }
-
 
     @Override
     JSONObject toJsonObj() {

@@ -28,7 +28,7 @@ public class Server implements IServer {
                 return currBatch.getValidRequests();
             } else if (json instanceof JSONObject) {
                 currBatch = null;
-                //una richiesta non batch: arraylist<request> di dimensione 1
+                // a non-batch request: ArrayList<Request> of size 1
                 Request req = new Request(receivedString);
                 ArrayList<Request> requests = new ArrayList<>();
                 requests.add(req);
@@ -37,15 +37,15 @@ public class Server implements IServer {
                 throw new JSONRPCException("Invalid json received");
             }
         } catch (JSONException | JSONRPCException e) {
-            //se json è invalido viene restituita in automatico un'unica risposta con errore di parsing (vedi documentazione)
-            //indifferentemente se era una richiesta o un array di richieste
-            Id id = Id.getIdFromRequest(receivedString); //se è una richiesta unica tenta di recuperarne l'id, altrimenti id null
+            // if the JSON is invalid, an automatic single response with parsing error is returned (see documentation)
+            // regardless of whether it was a single request or an array of requests
+            Id id = Id.getIdFromRequest(receivedString); // if it is a single request, it attempts to retrieve its ID; otherwise, the ID is null
             Error err = new Error(Error.Errors.PARSE);
             Response errorResp = new Response(id, err);
             server.reply(errorResp.getJsonString());
             currBatch = null;
         }
-        return new ArrayList<>(); //se ci sono errori la lista di richieste da eseguire è vuota
+        return new ArrayList<>(); // if there are errors, the list of requests to execute is empty
     }
 
     public void reply(Response response) throws JSONRPCException {
@@ -59,11 +59,11 @@ public class Server implements IServer {
             throw new JSONRPCException("Single response needed");
         }
         if (responses.size() == 0) {
-            //nessuna risposta a batch di sole notifiche
+            // no response to a batch of only notifications
             currBatch = null;
         } else if (responses.size() == 1 && currBatch == null) {
-            //risposta singola a richiesta singola
-            //currBatch == null evita di rispondere con una risposta singola a un batch di richieste di dimensione 1. in questo caso si risponde con un batch di risposte di dimensione 1
+            // single response to a single request
+            // when currBatch == null, it prevents responding with a single response to a batch of requests of size 1. In this case, respond with a batch of responses of size 1
             this.reply(responses.get(0));
         } else {
             currBatch.put(responses);
@@ -71,5 +71,4 @@ public class Server implements IServer {
             currBatch = null;
         }
     }
-
 }

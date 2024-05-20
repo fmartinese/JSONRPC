@@ -14,10 +14,10 @@ public abstract class AbstractResponse extends JsonRpcMessage {
         public String toString() {return text;}
     }
 
-    Member result; //primitive o structure
+    Member result; // primitive or structured
     Error error;
 
-    //setup
+    // setup
     private AbstractResponse(Id id, Member result, Error error) {
         if (id == null) {id = new Id();}
         if (result != null && (error != null) || (result == null && error == null)) {
@@ -33,12 +33,15 @@ public abstract class AbstractResponse extends JsonRpcMessage {
         }
         this.jsonRpcString = obj.toString();
     }
+
     AbstractResponse(Id id, Member result) {
         this(id, result, null);
     }
+
     AbstractResponse(Id id, Error error) {
         this(id, null, error);
     }
+
     AbstractResponse() {
         super();
     }
@@ -47,19 +50,21 @@ public abstract class AbstractResponse extends JsonRpcMessage {
         if (result == null) {throw new NullPointerException("No result");}
         return result;
     }
+
     public Error getError() {
         if (error == null) {throw new NullPointerException("No error");}
         return error;
     }
+    
     public boolean hasError() {
         return this.result == null;
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
-        if (!(other instanceof AbstractResponse))return false;
+        if (!(other instanceof AbstractResponse)) return false;
         AbstractResponse o = (AbstractResponse) other;
 
         if (this.id != null) {

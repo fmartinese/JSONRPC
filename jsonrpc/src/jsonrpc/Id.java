@@ -5,16 +5,18 @@ import org.json.JSONObject;
 import java.security.InvalidParameterException;
 
 public class Id {
-    //id = string o int o null
-    //da specifica id può essere un numero, ma non dovrebbe contenere parti decimali. per questo si usa Integer e non Number
-
     public enum Types{NULL, STRING, INT}
     private Object value;
     private Types type;
+
+    // ID can be a string, an integer or null
+    // as per the specification, the ID can be a number, but it should not contain decimal parts. This is why Integer is used instead of Number
+
     public Id(int id) {
         value = id;
         type = Types.INT;
     }
+
     public Id(String id) {
         if (id == null || id.isEmpty()) {
             value = null;
@@ -25,8 +27,9 @@ public class Id {
             type = Types.STRING;
         }
     }
+
     public Id() {
-        value = null;//JSONObject.NULL;
+        value = null; // JSONObject.NULL;
         type = Types.NULL;
     }
 
@@ -43,6 +46,7 @@ public class Id {
     public boolean isNull() {
         return type==Types.NULL;
     }
+
     public Types getType() {
         return type;
     }
@@ -62,10 +66,10 @@ public class Id {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
-        if (!(other instanceof Id))return false;
+        if (!(other instanceof Id)) return false;
         Id o = (Id) other;
 
         switch (this.type) {
@@ -74,7 +78,6 @@ public class Id {
             case INT: return o.type == Types.INT && ((Integer)getInt()).equals(o.getInt());
             default: return false;
         }
-
     }
 
     public static Id getIdFromRequest(String request) {
@@ -82,7 +85,7 @@ public class Id {
             JSONObject obj = new JSONObject(request);
             return toId(obj.get(AbstractRequest.Members.ID.toString()));
         } catch (JSONException e) {
-            return new Id(); //se non è possibile recuperarlo della richiesta si crea un id nullo
+            return new Id(); // if it is not possible to retrieve the ID from the request, a null ID is created
         }
     }
 }

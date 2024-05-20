@@ -6,16 +6,16 @@ import org.json.JSONObject;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
-public class Batch { //public solo per test
+public class Batch { // public only for test
     private ArrayList<Request> reqs;
     private ArrayList<Response> resps;
     private boolean onlyNotifies;
 
-    public Batch(JSONArray requestArray) { //public solo per test
+    public Batch(JSONArray requestArray) { // public only for test
         setup(requestArray);
     }
 
-    public Batch(ArrayList<Request> requests) { //public solo per test
+    public Batch(ArrayList<Request> requests) { // public only for test
         JSONArray array = new JSONArray();
         for (Request r : requests) {
             array.put( r == null ? null : r.getObj() );
@@ -36,12 +36,12 @@ public class Batch { //public solo per test
                 JSONObject o = requestArray.getJSONObject(i);
                 stringReq = o.toString();
                 req = new Request(stringReq);
-                //resp = null;
+                // resp = null;
                 if (!req.isNotify()) {onlyNotifies = false;}
             } catch (InvalidParameterException | JSONException e) {
-                Id id = stringReq != null ? Id.getIdFromRequest(stringReq) : new Id(); //tenta di recuperarne l'id, altrimenti id null
+                Id id = stringReq != null ? Id.getIdFromRequest(stringReq) : new Id(); // attempt to retrieve the ID; otherwise, ID is null
                 Error err = new Error(Error.Errors.INVALID_REQUEST);
-                //req = null;
+                // req = null;
                 resp = new Response(id, err);
                 onlyNotifies = false;
             } finally {
@@ -50,28 +50,29 @@ public class Batch { //public solo per test
             }
         }
     }
+
     private void put(Request req, Response resp) {
         int i = reqs.indexOf(req);
         resps.set(i, resp);
     }
-    public void put(ArrayList<Response> responses) { //public solo per teset
-        //devono essere passate le risposte in numero esatto (pari al numero di richieste non notifiche valide)
-
-        int c; //conta le richieste a cui non va inserita la risposta corrispondente perché non valide o notifiche
+    
+    public void put(ArrayList<Response> responses) { // public only for test
+        // responses must be passed in exact number (equal to the number of valid non-notification requests)
+        int c; // count requests where corresponding responses should not be inserted because they are either invalid or notifications
         int i;
         for (i = 0, c = 0; i < responses.size() + c; i++) {
-            Request req = reqs.get(i); //IndexOutOfBoundsException se le risposte sono troppe
+            Request req = reqs.get(i); // IndexOutOfBoundsException if there are too many responses
             if (req == null || req.isNotify()) {
-                //la risposta ad una richiesta non valida o notifica non deve esserci
+                // there should not be a response to an invalid request or notification
                 c++;
             } else {
                 this.put(req, responses.get(i-c));
             }
         }
         for (; i < reqs.size(); i++) {
-            //se ci sono ancora richieste non notifiche a cui non è stata assegnata una risposta
+            // if there are still non-notification requests without a response assigned
             if (reqs.get(i)!=null && !reqs.get(i).isNotify()) {throw new IndexOutOfBoundsException("Not enough responses");}
-            //troppe poche risposte
+            // too few responses
         }
     }
 
@@ -87,11 +88,11 @@ public class Batch { //public solo per test
         this.put(resps);
     }
 
-    public ArrayList<Request> getAllRequests() {
+    public ArrayList<Request> getAllRequests() { // public only for test
         return reqs;
-    } //solo per test
+    }
 
-    public ArrayList<Request> getValidRequests() { //public solo per test
+    public ArrayList<Request> getValidRequests() { // public only for test
         ArrayList<Request> rq = new ArrayList<>();
         for (Request r : reqs) {
             if (r!=null) {
@@ -101,11 +102,11 @@ public class Batch { //public solo per test
         return rq;
     }
 
-    public ArrayList<Response> getAllResponses() {
+    public ArrayList<Response> getAllResponses() { // public only for test
         return resps;
-    } //solo per test
+    }
 
-    public ArrayList<Response> getValidResponses() { //public solo per test
+    public ArrayList<Response> getValidResponses() { // public only for test
         ArrayList<Response> rp = new ArrayList<>();
         for (Response r : resps) {
             if (r!=null) {
@@ -115,17 +116,17 @@ public class Batch { //public solo per test
         return rp;
     }
 
-    public String getResponseJSON() { //public solo per test
+    public String getResponseJSON() { // public only for test
         JSONArray arr = new JSONArray();
         for (Response r : resps) {
-            if (r != null) { //le risposte alle notifiche non vengono inviate
+            if (r != null) { // responses to notifications are not sent
                 arr.put(r.getObj());
             }
         }
         return arr.toString();
     }
 
-    public String getRequestJSON() { //public solo per test
+    public String getRequestJSON() { // public only for test
         JSONArray arr = new JSONArray();
         for (Request r : reqs) {
             arr.put(r.getObj());

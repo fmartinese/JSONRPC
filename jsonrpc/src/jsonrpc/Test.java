@@ -10,16 +10,17 @@ import java.util.Iterator;
 public class Test {
     public static void main(String args[]) {
         //testBatch();
-        /*testRequestFromString();
+        /*
+        testRequestFromString();
         testResponseFromString();
         testRequestFromParams();
-        testResponseFromParams();*/
+        testResponseFromParams();
+        */
     }
-
 
     private static void testRequestFromParams() {
         ArrayList<StructuredMember> params = new ArrayList<>();
-        params.add(null); //modo corretto per omettere i parametri opzionali
+        params.add(null); // correct way to omit optional parameters
         ArrayList<Member> pl = new ArrayList<>();
         HashMap<String, Member> hm = new HashMap<>();
 
@@ -61,11 +62,8 @@ public class Test {
         memberlist.add(boolmap);
         membermap.put("map", boolmap);
 
-
-
         params.add(new StructuredMember(memberlist));
         params.add(new StructuredMember(membermap));
-
 
         String method = "testmetodo";
         ArrayList<Id> ids = new ArrayList<>();
@@ -86,9 +84,8 @@ public class Test {
                 System.out.println(System.lineSeparator());
             }
         }
-
-
     }
+
     private static void testResponseFromParams() {
         ArrayList<Id> ids= new ArrayList<>();
         ids.add(new Id(1));
@@ -121,6 +118,7 @@ public class Test {
         }
 
     }
+
     private static void testResponseFromString() {
         ArrayList<String> testStrings = new ArrayList<>();
         testStrings.add("{\"jsonrpc\": \"2.0\", \"result\": 19, \"id\": 1}");
@@ -169,6 +167,7 @@ public class Test {
             System.out.println("NON COSTRUTTORE: " + e.getClass().toString() + " - " + e.getMessage());
         }
     }
+
     private static void readReq(AbstractRequest req) {
         try {
             System.out.println("Notifica: " + req.isNotify());
@@ -199,10 +198,10 @@ public class Test {
         testStrings.add("{\"jsonrpc\": \"2.0\", \"method\": \"test\", \"params\": {\"subtrahend\": 23, \"minuend\": 42, \"subobj\": {\"par1\": 34, \"par2\": \"value\", \"array\": [1,2,3]}}, \"id\": 3}");
         testStrings.add("");
         testStrings.add("test");
-        testStrings.add("{\"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}"); //no jsonrpc 2.0
-        testStrings.add("{\"jsonrpc\": \"3.0\", \"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}"); //jsonrpc <> 2.0
-        testStrings.add("{\"jsonrpc\": \"2.0\", \"method\": \"subtract\", \"params\": 42, \"id\": 1}"); //parametri non structure
-        testStrings.add("{\"jsonrpc\": \"2.0\", \"method\": \"subtract\", \"params\": [42, 23], \"id\": null}"); //id nullo
+        testStrings.add("{\"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}"); // no jsonrpc 2.0
+        testStrings.add("{\"jsonrpc\": \"3.0\", \"method\": \"subtract\", \"params\": [42, 23], \"id\": 1}"); // jsonrpc <> 2.0
+        testStrings.add("{\"jsonrpc\": \"2.0\", \"method\": \"subtract\", \"params\": 42, \"id\": 1}"); // unstructured parameters
+        testStrings.add("{\"jsonrpc\": \"2.0\", \"method\": \"subtract\", \"params\": [42, 23], \"id\": null}"); // null ID
 
         for (String ts : testStrings) {
             System.out.println(ts);
@@ -210,10 +209,8 @@ public class Test {
             System.out.println(System.lineSeparator());
             System.out.println(System.lineSeparator());
             System.out.println(System.lineSeparator());
-
         }
     }
-
 
     private static String readStructured(StructuredMember params) throws JSONException, JSONRPCException {
         if (params == null) {return "";}
@@ -222,8 +219,8 @@ public class Test {
         } else {
             return readObj(params.getJSONObject());
         }
-
     }
+
     private static String readArray(JSONArray params) throws JSONRPCException {
         StringBuilder val= new StringBuilder();
         for (int i = 0; i < params.length(); i++) {
@@ -236,9 +233,9 @@ public class Test {
         }
         return val.toString();
     }
+
     private static String readObj(JSONObject params) throws JSONRPCException {
         StringBuilder val= new StringBuilder();
-
         Iterator<?> keys = params.keys();
 
         while( keys.hasNext() ) {
@@ -267,5 +264,4 @@ public class Test {
             default: throw new JSONRPCException("Unexpected member type");
         }
     }
-
 }

@@ -5,6 +5,10 @@ import org.json.JSONObject;
 import java.security.InvalidParameterException;
 
 public class Error extends JsonRpcObj {
+    private String message;
+    private int code; // as per the specification, it must be an integer
+    private Member data; // primitive or structured
+
     public enum ErrMembers {
         CODE("code"), MESSAGE("message"), DATA("data");
 
@@ -15,6 +19,7 @@ public class Error extends JsonRpcObj {
         @Override
         public String toString() {return text;}
     }
+    
     public enum Errors {
         PARSE(-32700, "Parse error"),
         INVALID_REQUEST(-32600, "Invalid Request"),
@@ -32,10 +37,7 @@ public class Error extends JsonRpcObj {
         public int getCode() {return code;}
         public String getMessage() {return message;}
     }
-    private String message;
-    private int code; //da specifica deve essere intero
-    private Member data;//primitive o structure
-
+    
     public Error(String errorMessage, int errorCode, Member errorData) {
         if (errorMessage == null || errorMessage.isEmpty()) {throw new InvalidParameterException("Error message not defined");}
         this.message = errorMessage;
@@ -48,9 +50,11 @@ public class Error extends JsonRpcObj {
         }
         this.jsonRpcString = obj.toString();
     }
+
     public Error(String errorMessage, int errorCode) {
         this(errorMessage, errorCode, null);
     }
+
     public Error(Errors error) {
         this.message = error.getMessage();
         this.code = error.getCode();
@@ -70,20 +74,23 @@ public class Error extends JsonRpcObj {
     public String getErrorMessage() {
         return message;
     }
+
     public int getErrorCode() {
         return code;
     }
+
     public Member getErrorData() throws NullPointerException {
         if (data == null) {throw new NullPointerException("No error data defined");}
         return data;
     }
+
     public boolean hasErrorData() {
         return data!=null;
     }
 
-    JSONObject toJsonObj() throws JSONRPCException{
-        //obbligatori
-        //if (code == null) {throw new JSONRPCException("Error code not defined");} code non è più Integer
+    JSONObject toJsonObj() throws JSONRPCException {
+        // mandatory
+        // if (code == null) {throw new JSONRPCException("Error code not defined");} code is no longer an Integer
         if (message == null) { throw new JSONRPCException("Error message not defined");}
 
         JSONObject object = new JSONObject();
@@ -94,7 +101,7 @@ public class Error extends JsonRpcObj {
             System.out.println(e.getMessage());
             return null;
         }
-        if (data != null) { //opzionale
+        if (data != null) { // optional
             putMember(object, ErrMembers.DATA.toString(), data);
         }
 
@@ -126,7 +133,7 @@ public class Error extends JsonRpcObj {
             throw new InvalidParameterException(e.getMessage());
         }
 
-        //verifica che non ci siano altri parametri
+        // check that there are no other parameters
         if (!checkMembersSubset(ErrMembers.values(), obj)) {throw new InvalidParameterException("Unexpected paramater");}
 
         this.jsonRpcString = obj.toString();
@@ -137,14 +144,14 @@ public class Error extends JsonRpcObj {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
-        if (!(other instanceof Error))return false;
+        if (!(other instanceof Error)) return false;
         Error o = (Error) other;
 
-        if (this.data==null)
-            return this.code == o.code && this.message.equals(o.message) && o.data==null;
+        if (this.data == null)
+            return this.code == o.code && this.message.equals(o.message) && o.data == null;
         else
             return this.code == o.code && this.message.equals(o.message) && this.data.equals(o.data);
     }

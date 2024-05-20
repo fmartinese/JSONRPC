@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class Client implements IClient {
     private IZmqClient zmqClient;
+
     public Client(int port) {
         zmqClient = new ZmqClient(port);
     }
@@ -31,7 +32,8 @@ public class Client implements IClient {
 
     @Override
     public void sendNotify(Request notify) throws JSONRPCException {
-        if (!notify.isNotify()) {throw new JSONRPCException("Not a notify");} //funzionerebbe ma la specifica jsonrpc prevede che se è una richiesta deve essere restituita una risposta
+        // it would work, but the JSON-RPC specification requires that a response be returned if it is a request
+        if (!notify.isNotify()) {throw new JSONRPCException("Not a notify");}
 
         zmqClient.send(notify.getJsonString());
     }
@@ -50,11 +52,11 @@ public class Client implements IClient {
                 batch.put(arr);
                 return batch.getValidResponses();
             } catch (JSONException e) {
-                Id id = new Id(); //da un batch di richieste non è possibile recuperare UN id
-                //HashMap<String, Member> errorData = new HashMap<>();
-                //errorData.put("Invalid response received", new Member(e.getMessage()));
-                Error err = new Error(Error.Errors.PARSE/*, new Member(new StructuredMember(errorData))*/);
-                Response errorResp = new Response(id, err); //la creazione è sicura non serve try catch
+                Id id = new Id(); // from a batch of requests, it is not possible to retrieve a single ID
+                // HashMap<String, Member> errorData = new HashMap<>();
+                // errorData.put("Invalid response received", new Member(e.getMessage()));
+                Error err = new Error(Error.Errors.PARSE /*, new Member(new StructuredMember(errorData))*/ );
+                Response errorResp = new Response(id, err); // it is safe to proceed; try-catch is unnecessary
                 ArrayList<Response> resp = new ArrayList<>();
                 resp.add(errorResp);
                 return resp;

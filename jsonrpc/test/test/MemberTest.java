@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
 
 public class MemberTest extends Member {
 
-    //TODO: fix
-    /*@Test
+    /* TODO: fix
+    @Test 
     public void toMember() throws JSONException {
         JSONArray array = new JSONArray();
         JSONObject object = new JSONObject();
@@ -110,5 +110,4 @@ public class MemberTest extends Member {
         assertNotEquals(lm, Member.toMember(map));
         assertEquals(lm, Member.toMember(list));
     }
-
 }
