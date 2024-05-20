@@ -39,7 +39,7 @@ public class Server implements IServer {
         } catch (JSONException | JSONRPCException e) {
             // if the JSON is invalid, an automatic single response with parsing error is returned (see documentation)
             // regardless of whether it was a single request or an array of requests
-            Id id = Id.getIdFromRequest(receivedString); // if it's a single request, it attempts to retrieve its ID; otherwise, the ID is null
+            Id id = Id.getIdFromRequest(receivedString); // if it is a single request, it attempts to retrieve its ID; otherwise, the ID is null
             Error err = new Error(Error.Errors.PARSE);
             Response errorResp = new Response(id, err);
             server.reply(errorResp.getJsonString());

@@ -38,7 +38,7 @@ public class ZmqServer implements IZmqServer {
         msg.send(socket);
 
         // in theory, a router can reply multiple times to a single message, not knowing the client's type (it might not necessarily be a req)
-        // in case it's desired to make it possible, do not set identity and empty to null, but the server might reply multiple times only to the last client
+        // in case it is desired to make it possible, do not set identity and empty to null, but the server might reply multiple times only to the last client
         identity = null;
         empty = null;
     }

@@ -32,7 +32,8 @@ public class Client implements IClient {
 
     @Override
     public void sendNotify(Request notify) throws JSONRPCException {
-        if (!notify.isNotify()) {throw new JSONRPCException("Not a notify");} // it would work, but the JSON-RPC specification requires that a response be returned if it's a request
+        // it would work, but the JSON-RPC specification requires that a response be returned if it is a request
+        if (!notify.isNotify()) {throw new JSONRPCException("Not a notify");}
 
         zmqClient.send(notify.getJsonString());
     }
@@ -51,11 +52,11 @@ public class Client implements IClient {
                 batch.put(arr);
                 return batch.getValidResponses();
             } catch (JSONException e) {
-                Id id = new Id(); // from a batch of requests, it's not possible to retrieve a single ID
+                Id id = new Id(); // from a batch of requests, it is not possible to retrieve a single ID
                 // HashMap<String, Member> errorData = new HashMap<>();
                 // errorData.put("Invalid response received", new Member(e.getMessage()));
                 Error err = new Error(Error.Errors.PARSE /*, new Member(new StructuredMember(errorData))*/ );
-                Response errorResp = new Response(id, err); // it's safe to proceed; try-catch is unnecessary
+                Response errorResp = new Response(id, err); // it is safe to proceed; try-catch is unnecessary
                 ArrayList<Response> resp = new ArrayList<>();
                 resp.add(errorResp);
                 return resp;

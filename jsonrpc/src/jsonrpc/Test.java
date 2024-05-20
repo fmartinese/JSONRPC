@@ -209,7 +209,6 @@ public class Test {
             System.out.println(System.lineSeparator());
             System.out.println(System.lineSeparator());
             System.out.println(System.lineSeparator());
-
         }
     }
 
@@ -220,7 +219,6 @@ public class Test {
         } else {
             return readObj(params.getJSONObject());
         }
-
     }
 
     private static String readArray(JSONArray params) throws JSONRPCException {

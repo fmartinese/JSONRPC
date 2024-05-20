@@ -85,7 +85,7 @@ public class Id {
             JSONObject obj = new JSONObject(request);
             return toId(obj.get(AbstractRequest.Members.ID.toString()));
         } catch (JSONException e) {
-            return new Id(); // if it's not possible to retrieve the ID from the request, a null ID is created
+            return new Id(); // if it is not possible to retrieve the ID from the request, a null ID is created
         }
     }
 }

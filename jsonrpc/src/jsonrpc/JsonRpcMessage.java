@@ -10,7 +10,7 @@ abstract class JsonRpcMessage extends JsonRpcObj {
     public Id getId() {
         // a null ID is different from a notification
         if (id == null) {
-            throw new NullPointerException("Notify: id undefined"); // it's a notification
+            throw new NullPointerException("Notify: id undefined"); // it is a notification
         }
         return id;
     }

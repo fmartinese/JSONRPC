@@ -18,7 +18,7 @@ public abstract class JsonRpcObj { // public for test
         return valid;
     }*/
 
-    abstract JSONObject toJsonObj() throws JSONRPCException; // build a JSON-RPC object using attributes. Implemented differently in request, response and error
+    abstract JSONObject toJsonObj() throws JSONRPCException; // build a JSON-RPC object using attributes; implemented differently in request, response and error
 
     static boolean checkMembersSubset(Enum<?> members[], JSONObject obj) {
         // verify that the object has only the parameters contained in the member array

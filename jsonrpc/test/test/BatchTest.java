@@ -82,7 +82,7 @@ public class BatchTest {
     }
 
     private void testInvalidRequest(Batch b, int i) {
-        assertTrue(b.getAllRequests().get(i)==null); // last request is null because it's invalid
+        assertTrue(b.getAllRequests().get(i)==null); // last request is null because it is invalid
         assertTrue(b.getValidRequests().size()==i); // request is not included among the valid ones
         b.put(validResps);
         assertEquals(b.getAllResponses(), b.getValidResponses());

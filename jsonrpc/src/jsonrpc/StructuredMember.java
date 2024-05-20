@@ -138,10 +138,10 @@ public class StructuredMember {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
-        if (!(other instanceof StructuredMember))return false;
+        if (!(other instanceof StructuredMember)) return false;
         StructuredMember o = (StructuredMember) other;
         if (this.isArray) {
             return o.isArray && getList().equals(o.getList());
